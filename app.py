@@ -36,13 +36,13 @@ def get_users():
     return jsonify([user.to_dict() for user in users]), 200
 
 # READ ONE
-@app.route('/api/users/', methods=['GET'])
+@app.route('/api/users/<int:id>', methods=['GET'])
 def get_user(id):
     user = User.query.get_or_404(id)
     return jsonify(user.to_dict()), 200
 
 # UPDATE
-@app.route('/api/users/', methods=['PUT'])
+@app.route('/api/users/<int:id>', methods=['PUT'])
 def update_user(id):
     try:
         user = User.query.get_or_404(id)
@@ -59,7 +59,7 @@ def update_user(id):
         return jsonify({'error': str(e)}), 400
 
 # DELETE
-@app.route('/api/users/', methods=['DELETE'])
+@app.route('/api/users/<int:id>', methods=['DELETE'])
 def delete_user(id):
     try:
         user = User.query.get_or_404(id)
@@ -70,5 +70,6 @@ def delete_user(id):
         db.session.rollback()
         return jsonify({'error': str(e)}), 400
 
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+if __name__ == "__main__":
+    app.run(port=5000, debug=True)
+
